@@ -1,2 +1,2 @@
-# el_decko_backend_mediakeys
-A Backend for El Decko emulate media key press from your Stream Deck
+# El Decko MPRIS-Backend
+A El Decko backendto control media applications via the MPRIS dbus interface.
