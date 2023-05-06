@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "el_decko_backend_mpris"
+authors = [
+  { name="Imo 'Vortex Acherontic' Hester", email="vortex@z-ray.de" },
+]
+dynamic = ["version"]
+readme = "README.md"
+description = "El Decko backend to control MPRIS2 compatible media players"
+license = { text = "GPL-3" }
+requires-python = ">=3.8"
+dependencies = [
+    "pympris",
+    "xdg"
+]
+
+[project.entry-points."eldecko.backend"]
+init = "edb_mpris:edb_init"
+stop = "edb_mpris:edb_stop"
+fire = "edb_mpris:edb_fire_event"
+events = "edb_mpris:edb_available_events"
+
+[project.urls]
+"Homepage" = "https://github.com/Z-Ray-Entertainment/el_decko_backend_mpris"
+"Bug Tracker" = "https://github.com/Z-Ray-Entertainment/el_decko_backend_mpris/issues"
+
+[tool.setuptools.dynamic]
+version = { attr = "edb_mpris.VERSION" }
+
+[tool.setuptools]
+include-package-data = true
+platforms = ["Linux"]
