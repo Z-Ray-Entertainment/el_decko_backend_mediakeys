@@ -56,5 +56,4 @@ dbus-python
 cmake  
 dbus-1-devel  
 glib2-devel  
-python3**-devel  
-python3**-gobject-Gdk
+python3**-devel
