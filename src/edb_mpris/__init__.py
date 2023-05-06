@@ -5,7 +5,7 @@ from pympris import PyMPRISException
 
 from edb_mpris.event import EventType
 
-VERSION = "2023.5.6"
+VERSION = "2023.5.6.1"
 dbus_loop = DBusGMainLoop()
 bus = dbus.SessionBus(mainloop=dbus_loop)
 player_volumes = []
