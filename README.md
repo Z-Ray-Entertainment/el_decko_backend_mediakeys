@@ -21,7 +21,7 @@ by [El Decko Core](https://github.com/Z-Ray-Entertainment/el_decko_core) with th
             "0": {
             "backend": "edb_mpris",
             "event": "PLAY",
-            "event_parameters": {},
+            "event_parameters": {"player":"rhythmbox"},
             "image_idle": null,
             "image_pressed": null
             }
@@ -31,15 +31,30 @@ by [El Decko Core](https://github.com/Z-Ray-Entertainment/el_decko_core) with th
 ```
 
 This will configure the very first key (`0`) to use this plugin (`edb_mpris`) and bind the event `PLAY` to it.
-If the `event_parameters` are kept empty the respective MPRIS event will itterate over all available MPRIS2 compatible 
-clients and trigger the respective event.  
+If the `event_parameters` are kept empty `"event_parameters": {}` the respective event will be send to all available 
+MPRIS2 clients.  
+If `event_parameters` contains `"player":"<some_mpris_player_name"` it will only send the MPRIS event to all players 
+matching `player`.
 
-### Supported MPRIS controls
+### Supported MPRIS2 controls
 
-- None
+- Play
+- Play/Pause
+- Next
+- Previous
+
+### Additional controls
+- Mute
+- Unmute
+- Toggle Mute
 
 ## Requirements
 ### Python
-Python >= 3.8
+Python >= 3.8  
 pympris
-xdg
+dbus-python  
+cmake  
+dbus-1-devel  
+glib2-devel  
+python3**-devel  
+python3**-gobject-Gdk
