@@ -1,6 +1,7 @@
 import pympris
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
+from pympris import PyMPRISException
 
 from edb_mpris.event import EventType
 
@@ -34,9 +35,11 @@ def __make_request(event_type: EventType, player_ids, event_parameters: dict = N
 
     match event_type:
         case EventType.MUTE.value:
-            pass
+            __unmute(player_ids, player_name)
         case EventType.UNMUTE.value:
-            pass
+            __mute(player_ids, player_name)
+        case EventType.TOGGLE_MUTE.value:
+            __toggle_mute(player_ids, player_name)
         case EventType.PREV.value:
             __prev(player_ids, player_name)
         case EventType.NEXT.value:
@@ -121,46 +124,55 @@ def __prev(player_ids, player_name):
 
 
 def __mute(player_ids, player_name):
-    if player_name != "":
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            if player_name.lower() in str(media_player.root.Identity).lower():
+    try:
+        if player_name != "":
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
+                if player_name.lower() in str(media_player.root.Identity).lower():
+                    player_volumes[media_player.root.Identity] = media_player.player.Volume
+                    media_player.player.Volume = 0
+        else:
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
                 player_volumes[media_player.root.Identity] = media_player.player.Volume
                 media_player.player.Volume = 0
-    else:
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            player_volumes[media_player.root.Identity] = media_player.player.Volume
-            media_player.player.Volume = 0
+    except PyMPRISException:
+        print("WARN: Player " + player_name + " does not support interface Volume!")
 
 
 def __unmute(player_ids, player_name):
-    if player_name != "":
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            if player_name.lower() in str(media_player.root.Identity).lower():
+    try:
+        if player_name != "":
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
+                if player_name.lower() in str(media_player.root.Identity).lower():
+                    media_player.player.Volume = player_volumes[media_player.root.Identity]
+        else:
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
                 media_player.player.Volume = player_volumes[media_player.root.Identity]
-    else:
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            media_player.player.Volume = player_volumes[media_player.root.Identity]
+    except PyMPRISException:
+        print("WARN: Player " + player_name + " does not support interface Volume!")
 
 
 def __toggle_mute(player_ids, player_name):
-    if player_name != "":
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            if player_name.lower() in str(media_player.root.Identity).lower():
+    try:
+        if player_name != "":
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
+                if player_name.lower() in str(media_player.root.Identity).lower():
+                    if media_player.player.Volume == 0:
+                        media_player.player.Volume = player_volumes[media_player.root.Identity]
+                    else:
+                        player_volumes[media_player.root.Identity] = media_player.player.Volume
+                        media_player.player.Volume = 0
+        else:
+            for player in player_ids:
+                media_player = pympris.MediaPlayer(player, bus)
                 if media_player.player.Volume == 0:
                     media_player.player.Volume = player_volumes[media_player.root.Identity]
                 else:
                     player_volumes[media_player.root.Identity] = media_player.player.Volume
                     media_player.player.Volume = 0
-    else:
-        for player in player_ids:
-            media_player = pympris.MediaPlayer(player, bus)
-            if media_player.player.Volume == 0:
-                media_player.player.Volume = player_volumes[media_player.root.Identity]
-            else:
-                player_volumes[media_player.root.Identity] = media_player.player.Volume
-                media_player.player.Volume = 0
+    except PyMPRISException:
+        print("WARN: Player " + player_name + " does not support interface Volume!")
