@@ -14,7 +14,10 @@ license = { text = "GPL-3" }
 requires-python = ">=3.8"
 dependencies = [
     "pympris",
-    "xdg"
+    "PyGObject",
+    "pycairo",
+    "pgi",
+    "dbus-python>=1.0"
 ]
 
 [project.entry-points."eldecko.backend"]
