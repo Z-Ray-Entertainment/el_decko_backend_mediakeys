@@ -1,6 +1,8 @@
 # El Decko MPRIS-Backend
 An El Decko backend to control media applications via the MPRIS2 dbus interface.
 
+[![build result](https://build.opensuse.org/projects/home:VortexAcherontic:ElDecko/packages/el_decko_backend_mpris/badge.svg?type=default)](https://build.opensuse.org/package/show/home:VortexAcherontic:ElDecko/el_decko_backend_mpris)
+
 ## First run
 
 Upon running El Decko the first time with this backend installed it will create an empty default config to connect to
