@@ -1,3 +1,6 @@
+| :exclamation:  Discontinued there is now: [StreamController](https://flathub.org/de/apps/com.core447.StreamController)   |
+|-----------------------------------------|
+
 # El Decko MPRIS-Backend
 An El Decko backend to control media applications via the MPRIS2 dbus interface.
 
